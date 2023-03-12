@@ -33,8 +33,8 @@ const apiGet=useCallback(async()=>{
     return(
     <>
     <ViewsScreen
-    result={Trending}
-    />
+    result={Trending}/>
+    
     {listMovies.length > 0 &&(
         listMovies.map((list,key)=>(
             <Carousel
