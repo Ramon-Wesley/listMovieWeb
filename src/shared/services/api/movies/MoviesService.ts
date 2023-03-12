@@ -71,3 +71,9 @@ try {
 }
 
 }
+
+
+
+export const moviesService={
+    getAll
+}
