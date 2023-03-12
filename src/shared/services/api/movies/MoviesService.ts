@@ -35,7 +35,7 @@ try {
             items:await api.get(`/trending/all/week?language=pt-BR&api_key=${Environment.API_KEY}`)
         }, 
           {
-            slug:"topprated",
+            slug:"toprated",
             title:"Em alta",
             items:await api.get(`/movie/top_rated?language=pt-BR&api_key=${Environment.API_KEY}`)
         },
@@ -71,6 +71,8 @@ try {
 }
 
 }
+
+
 
 
 
