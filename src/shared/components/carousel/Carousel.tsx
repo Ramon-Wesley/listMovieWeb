@@ -36,7 +36,7 @@ useEffect(()=>{
         drag='x'
         dragConstraints={{right: 0, left:-divWidth}}
         style={{
-            height:theme.spacing(20),
+            height:smDown?theme.spacing(18):theme.spacing(20),
             gap:5,
             display:'flex',
             alignItems:'center', 
@@ -47,10 +47,7 @@ useEffect(()=>{
             whileHover={{scale:1.1}}
             whileTap={{scale:0.9}}
             transition={{ease:'easeIn'}}
-            style={{
-                height:theme.spacing(38),
-                width:theme.spacing(38)
-            }}
+          
             key={res.id}
             >
             <Box component={Paper}  onClick={()=>navigate(`/detalhe/${res.id}`)}>
