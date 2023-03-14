@@ -23,7 +23,10 @@ const apiGet=useCallback(async()=>{
         alert(result.message)
     }else{
         setListMovies(result)
-        setTrending(result[2].items.data.results[Math.floor(Math.random() *  result[2].items.data.results.length)])
+        let resultTrending:IMovie=result[2].items.data.results[Math.floor(Math.random() *  result[2].items.data.results.length)]
+        if(resultTrending){
+            setTrending(resultTrending)
+        }
     }
 },[])
 

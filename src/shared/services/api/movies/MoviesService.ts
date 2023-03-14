@@ -10,6 +10,7 @@ export interface IGetAll{
 export interface IMovie {
     id: number;
     title: string;
+    name:string;
     overview: string;
     poster_path: string | null;
     vote_average: number;
