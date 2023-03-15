@@ -27,10 +27,9 @@ export const ViewsScreen:React.FC<IViewsScreen>=({result,descriptionBox=true,chi
     return(
         <>
         <Box  width='100%' height={smDown? '60vh':mdDown?'80vh':'90vh'}   sx={{
-            backgroundImage:result?.poster_path ? `url(https://image.tmdb.org/t/p/original${result?.poster_path})`: '',
+            backgroundImage:result?.poster_path ? `url(https://image.tmdb.org/t/p/original${result?.backdrop_path})`: '',
             backgroundRepeat:'no-repeat',
-            backgroundSize:'100% 100%',
-            backgroundPosition:'center center'
+            backgroundSize:'cover'
         }}>
                 <Box width='100%' height='100%'   style={{
                     backgroundImage:'linear-gradient(to top right,rgba(0,0,0),rgba(0,0,0,0.1))'

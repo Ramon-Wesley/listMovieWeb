@@ -11,7 +11,7 @@ export const AppRouter=()=>{
     return(
         <Routes >
             <Route path='/pagina-inicial' element={<Dashboard/>} />
-            <Route path='/detalhe/:id' element={<ViewDetailScreen/>}/>
+            <Route path='/detalhe/:type/:id' element={<ViewDetailScreen/>}/>
             <Route path='*' element={<Navigate to='/pagina-inicial'/>}/>
             
         </Routes>

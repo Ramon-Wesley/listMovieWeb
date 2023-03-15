@@ -1,23 +1,30 @@
 import { Box, Typography,useTheme,useMediaQuery } from "@mui/material"
 import { ViewsScreen } from "./ViewsScreen"
 import {useEffect,useState,useMemo} from 'react'
-import { IMovie } from "../services/api"
+import { api, IMovie, moviesService } from "../services/api"
+import {useParams} from 'react-router-dom'
 
 
 export const ViewDetailScreen:React.FC=()=>{
     const theme=useTheme()
     const [choiceMovie,setChoiceMovie]=useState<IMovie>()   
     const smDown=useMediaQuery(theme.breakpoints.down('sm'))
-const mdDown=useMediaQuery(theme.breakpoints.down('md')) 
+    const mdDown=useMediaQuery(theme.breakpoints.down('md'))
+    const {id,type}=useParams()
    useEffect(()=>{
-    let resultChoice=localStorage.getItem('choice')
-    if(resultChoice !== null){
-        setChoiceMovie (JSON.parse(resultChoice ) as IMovie)
-    }
+    // let resultChoice=localStorage.getItem('choice')
+    // if(resultChoice !== null){
+    // }
+
+    moviesService.getById(Number(id),String(type)).then((res)=>{
+        setChoiceMovie (res as IMovie)
+        
+    })
    },[]
    )
 
     return(<>
+
                 <ViewsScreen 
                 descriptionBox={false}
                 result={choiceMovie}
@@ -25,18 +32,17 @@ const mdDown=useMediaQuery(theme.breakpoints.down('md'))
                     <Box display='flex'  flexDirection='column' justifyContent='center' alignItems='center' height='100%'
                     style={{
                         backgroundImage:'linear-gradient(to top,rgba(0,0,0),rgba(0,0,0,0.4))'
-                    }}
-                    >
+                    }}>
+                      
+                    <Typography>{JSON.stringify(choiceMovie?.media_type)}</Typography>
                         <Box  display='flex' alignItems='center' flexDirection={smDown ? 'column':'row'} height={smDown?theme.spacing(40): theme.spacing(40)} justifyContent='space-between' width='50%'  gap={2}>
                             <Box flex={1}
                                >
-                                
                                 <img  style={{borderRadius:`5%`}} src={`https://image.tmdb.org/t/p/w200${choiceMovie?.poster_path}`}/>
                             </Box>
                         <Box flex={1}>
                         <Typography variant="h4">{choiceMovie?.title ? choiceMovie.title : choiceMovie?.name}</Typography>
-                        <Typography>{choiceMovie?.overview}</Typography>
-                        
+                        <Typography>{JSON.stringify(choiceMovie?.credits?.cast)}</Typography>
                         </Box>
                         </Box>
                         </Box>

@@ -22,10 +22,8 @@ useEffect(()=>{
     setDivWitdth(Number(refDivMotion.current?.scrollWidth) - Number(refDivMotion.current?.offsetWidth)) 
 },[])
 
-const handleNavigate=useCallback((id:number,result:IMovie)=>{
-    navigate(`/detalhe/${id}`)
-    const resultChoice=JSON.stringify(result)
-    localStorage.setItem('choice',resultChoice)
+const handleNavigate=useCallback((id:number,type:string)=>{
+    navigate(`/detalhe/${type}/${id}`)
 },[])
 
     return(
@@ -64,7 +62,7 @@ const handleNavigate=useCallback((id:number,result:IMovie)=>{
                 height:smDown?theme.spacing(18):theme.spacing(23),
                 width:smDown?theme.spacing(18):theme.spacing(23),
             }}
-            onClick={()=>handleNavigate(res.id,res)}>
+            onClick={()=>handleNavigate(res.id,res.media_type? res.media_type : title === "Originais do Netflix"?'tv':'movie')}>
                 
                
             </Box>

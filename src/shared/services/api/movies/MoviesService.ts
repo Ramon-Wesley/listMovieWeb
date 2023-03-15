@@ -1,11 +1,17 @@
 import { api } from "../axios"
 import { Environment } from "../../../environments/Environment";
 import {AxiosResponse} from 'axios'
+import { NewLineKind } from "typescript";
 
 export interface IGetAll{
     slug:string;
     title:string;
     items:AxiosResponse<IMovieList>
+}
+interface Icast{
+    
+       
+    
 }
 export interface IMovie {
     id: number;
@@ -14,10 +20,21 @@ export interface IMovie {
     overview: string;
     poster_path: string | null;
     vote_average: number;
-  }
+    backdrop_path:string | null;
+    media_type?:string
+    credits?:{
+        cast:{
+            id:number,
+            name:string,
+            character:string
+        }[]
+    }
   
-  export interface IMovieList {
+}
+
+export interface IMovieList {
     results: IMovie[];
+    
   }
 
 export const getAll=async():Promise<IGetAll[] | Error>=>{
@@ -28,12 +45,12 @@ try {
         {
             slug:"originals",
             title:"Originais do Netflix",
-            items: await api.get(`/discover/tv?with_network=213&language=pt-BR&api_key=${Environment.API_KEY}`)
+            items: await api.get(`/discover/tv?with_network=213&language=pt-BR&api_key=${Environment.API_KEY}&media_type=movie,tv`)
         },
         {
             slug:"trending",
             title:"recomendados para você",
-            items:await api.get(`/trending/all/week?language=pt-BR&api_key=${Environment.API_KEY}`)
+            items:await api.get(`/trending/all/week?language=pt-BR&api_key=${Environment.API_KEY}&media_type=movie,tv`)
         }, 
           {
             slug:"toprated",
@@ -74,9 +91,17 @@ try {
 }
 
 
-
+export const getById=async(id:number,type:string):Promise<IMovie | Error>=>{
+    try {
+        const response=await api.get<IMovie>(`/${type}/${id}?api_key=${Environment.API_KEY}&language=pt-BR&append_to_response=credits`)
+        return response.data
+    } catch (error) {
+        return new Error((error as {message:string}).message || 'Erro ao buscar o registro')
+    }
+}
 
 
 export const moviesService={
-    getAll
+    getAll,
+    getById
 }
