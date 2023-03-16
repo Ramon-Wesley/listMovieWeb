@@ -24,7 +24,7 @@ export const DarkTheme=createTheme({
  },
  typography:{
     allVariants:{
-        color:red[600]
+        color:'#FFFFFF'
     }
  }   
 })

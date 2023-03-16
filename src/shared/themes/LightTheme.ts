@@ -24,7 +24,7 @@ export const LightTheme=createTheme({
  },
  typography:{
     allVariants:{
-        color:red[600]
+        color:'#000000'
     }
  }   
 })

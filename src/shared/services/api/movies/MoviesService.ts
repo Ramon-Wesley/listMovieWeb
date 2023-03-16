@@ -8,11 +8,13 @@ export interface IGetAll{
     title:string;
     items:AxiosResponse<IMovieList>
 }
-interface Icast{
-    
-       
-    
+export interface IValuecast{
+    id:number,
+    name:string,
+    character:string;
+    profile_path?:string;
 }
+
 export interface IMovie {
     id: number;
     title: string;
@@ -22,12 +24,11 @@ export interface IMovie {
     vote_average: number;
     backdrop_path:string | null;
     media_type?:string
+    genres:{
+        name:string
+    }[];
     credits?:{
-        cast:{
-            id:number,
-            name:string,
-            character:string
-        }[]
+        cast:IValuecast[]
     }
   
 }

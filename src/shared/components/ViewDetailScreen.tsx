@@ -3,6 +3,8 @@ import { ViewsScreen } from "./ViewsScreen"
 import {useEffect,useState,useMemo} from 'react'
 import { api, IMovie, moviesService } from "../services/api"
 import {useParams} from 'react-router-dom'
+import { Carousel } from "./carousel/Carousel"
+
 
 
 export const ViewDetailScreen:React.FC=()=>{
@@ -34,15 +36,22 @@ export const ViewDetailScreen:React.FC=()=>{
                         backgroundImage:'linear-gradient(to top,rgba(0,0,0),rgba(0,0,0,0.4))'
                     }}>
                       
-                    <Typography>{JSON.stringify(choiceMovie?.media_type)}</Typography>
                         <Box  display='flex' alignItems='center' flexDirection={smDown ? 'column':'row'} height={smDown?theme.spacing(40): theme.spacing(40)} justifyContent='space-between' width='50%'  gap={2}>
                             <Box flex={1}
                                >
-                                <img  style={{borderRadius:`5%`}} src={`https://image.tmdb.org/t/p/w200${choiceMovie?.poster_path}`}/>
+                                <img  style={{borderRadius:`5%`}} height='100%' src={`https://image.tmdb.org/t/p/w200${choiceMovie?.poster_path}`}/>
                             </Box>
-                        <Box flex={1}>
+                        <Box flex={1} width='100%' >
                         <Typography variant="h4">{choiceMovie?.title ? choiceMovie.title : choiceMovie?.name}</Typography>
-                        <Typography>{JSON.stringify(choiceMovie?.credits?.cast)}</Typography>
+                        <Typography >{choiceMovie?.overview}</Typography>
+                        
+        
+                            <Carousel
+                           cast={choiceMovie?.credits?.cast} 
+                            isDetail={true}
+                            />
+                        
+                           
                         </Box>
                         </Box>
                         </Box>
