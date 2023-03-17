@@ -42,7 +42,7 @@ export const ViewsScreen:React.FC<IViewsScreen>=({result,descriptionBox=true,chi
                     </Box>
                         <Typography variant="subtitle1" color='#FFFFFF'>{overview}</Typography>
                         <Box width='100%'>
-                        <Button variant="contained" startIcon={<Icon>add</Icon>} onClick={()=>navigate(`/detalhe/${result?.id}`)}>Ver mais</Button>
+                        <Button variant="contained" startIcon={<Icon>add</Icon>} onClick={()=>navigate(`/detalhe/${result?.media_type?result.media_type:'movie'}/${result?.id}`)}>Ver mais</Button>
                         </Box>
 
                     </Box>

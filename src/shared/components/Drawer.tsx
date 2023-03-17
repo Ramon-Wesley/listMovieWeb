@@ -17,9 +17,9 @@ import {
     const {debounce}=UseDebounce(600)
   
     const handleScroll=useCallback(() => {
-          if (!scrollValue && window.scrollY > 0) {
+          if (window.scrollY > 0) {
             setScrollValue(true);
-          } else if (scrollValue && window.scrollY === 0) {
+          } else if (window.scrollY === 0) {
             setScrollValue(false);
           }
       

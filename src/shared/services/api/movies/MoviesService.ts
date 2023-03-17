@@ -1,7 +1,6 @@
 import { api } from "../axios"
 import { Environment } from "../../../environments/Environment";
 import {AxiosResponse} from 'axios'
-import { NewLineKind } from "typescript";
 
 export interface IGetAll{
     slug:string;
@@ -14,7 +13,13 @@ export interface IValuecast{
     character:string;
     profile_path?:string;
 }
-
+export interface Itrailers{
+    name:string;
+    key:string;
+    type:string
+    site:string
+    iso_639_1:string
+}
 export interface IMovie {
     id: number;
     title: string;
@@ -29,6 +34,9 @@ export interface IMovie {
     }[];
     credits?:{
         cast:IValuecast[]
+    }
+    videos:{
+        results:Itrailers[]
     }
   
 }
@@ -94,7 +102,7 @@ try {
 
 export const getById=async(id:number,type:string):Promise<IMovie | Error>=>{
     try {
-        const response=await api.get<IMovie>(`/${type}/${id}?api_key=${Environment.API_KEY}&language=pt-BR&append_to_response=credits`)
+        const response=await api.get<IMovie>(`/${type}/${id}?api_key=${Environment.API_KEY}&language=pt-BR&append_to_response=credits,videos`)
         return response.data
     } catch (error) {
         return new Error((error as {message:string}).message || 'Erro ao buscar o registro')
