@@ -26,7 +26,7 @@ export const ViewsScreen:React.FC<IViewsScreen>=({result,descriptionBox=true,chi
     } 
     return(
         <>
-        <Box  width='100%' height={smDown? '60vh':mdDown?'80vh':'90vh'}   sx={{
+        <Box   height={smDown? '60vh':mdDown?'80vh':'90vh'}   sx={{
             backgroundImage:result?.poster_path ? `url(https://image.tmdb.org/t/p/original${result?.backdrop_path})`: '',
             backgroundRepeat:'no-repeat',
             backgroundSize:'cover'

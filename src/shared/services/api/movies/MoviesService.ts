@@ -108,9 +108,18 @@ export const getById=async(id:number,type:string):Promise<IMovie | Error>=>{
         return new Error((error as {message:string}).message || 'Erro ao buscar o registro')
     }
 }
+export const getTypeMovies=async(type?:string,page?:number,query?:string):Promise<IMovieList | Error>=>{
+    try {
+        const response=await api.get(`/${type}/popular?api_key=${Environment.API_KEY}&language=pt-BR&page=${page}`)
+        return response.data
+    } catch (error) {
+        return new Error((error as {message:string}).message || ' Erro ao listar os registros')
+    }
+}
 
 
 export const moviesService={
     getAll,
-    getById
+    getById,
+    getTypeMovies
 }

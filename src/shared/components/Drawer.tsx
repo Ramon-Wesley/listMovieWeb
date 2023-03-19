@@ -5,56 +5,79 @@ import {
     IconButton,
     Icon,
     Box,
+    FormControl,
+    MenuItem,
+    Select,
+    InputLabel,
   } from "@mui/material";
-  import { useState, useCallback, useEffect, useMemo } from "react";
-  import { motion } from "framer-motion";
-  import { UseDebounce } from "../hook";
+  import { useNavigate,useParams } from "react-router-dom";
+  import { motion,useScroll,useTransform} from "framer-motion";
+  import { UseThemeContext } from "../context";
+import { useState } from "react";
+ 
   interface IDrawerApp {
     children: React.ReactNode;
   }
   export const DrawerApp: React.FC<IDrawerApp> = ({ children }) => {
-    const [scrollValue, setScrollValue] = useState<boolean>(false);
-    const {debounce}=UseDebounce(600)
-  
-    const handleScroll=useCallback(() => {
-          if (window.scrollY > 0) {
-            setScrollValue(true);
-          } else if (window.scrollY === 0) {
-            setScrollValue(false);
-          }
-      
-      }, [scrollValue]);
-    
-    useEffect(()=>{
-      window.addEventListener("scroll",()=>debounce(()=>{handleScroll()}) );
-      return ()=>{window.removeEventListener("scroll",()=> ()=>{handleScroll()})}
-      
-    },[handleScroll,debounce])
-  
-    const appBarStyle=useMemo(()=>({
-      opacity:scrollValue? 1 : 0
-    }),[scrollValue])
-  console.log('jdgsdgj')
+    const navigate=useNavigate();
+    const [value,setValue]=useState<string>('')
+    const {type}=useParams()
+    const{toogleTheme}=UseThemeContext()
+    const{scrollYProgress}=useScroll()
+    const opacity = useTransform(
+      scrollYProgress,
+      [0,0.05],
+      [0,1],
+      {clamp:true}
+    )
     return (
-      <Box>
+      <>
         <motion.div
-        style={{opacity:0}}
-          animate={appBarStyle}
-          transition={{
-            duration: 0.2,
-          }}
+        style={{
+          opacity,
+          transition:'opacity 0.5s ease-out',
+        }}
         >
           <AppBar>
-            <Toolbar>
-              <IconButton>
-                <Icon>Menu</Icon>
+            <Toolbar component={Box} display='flex' justifyContent='space-between'>
+              <IconButton onClick={()=>navigate('/')}>
+                <Icon color="error">movie</Icon>
+                <Typography>Movie List Web</Typography>
               </IconButton>
-              <Typography>Teste</Typography>
+              <Box display='flex' justifyContent='center' alignItems='center' >
+
+              <FormControl size="small" sx={{minWidth:'120px'}}>
+                <InputLabel>Categorias</InputLabel>
+                <Select
+                label='Categorias'
+                value={value}
+                onChange={(e)=>setValue(e.target.value as string)}
+                >
+                
+                <MenuItem
+                value='movie'
+                onClick={()=>navigate('/movie')}
+                >
+                <Typography>Movie</Typography>
+                </MenuItem>
+                <MenuItem
+                value='tv'
+                onClick={()=>navigate('/tv')}
+                >
+                <Typography>Tv</Typography>
+                </MenuItem>
+                </Select>
+              </FormControl>
+              <IconButton onClick={toogleTheme}><Icon>dark_mode</Icon><Typography>Trocar tema</Typography></IconButton>
+                </Box>
             </Toolbar>
           </AppBar>
         </motion.div>
+        <Box height='100%'>
         {children}
-      </Box>
+        </Box>
+     
+      </>
     );
   };
   
